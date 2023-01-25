@@ -22,7 +22,7 @@ function checkDayHour(){
 	echo $dayHour
 }
 
-while [[ $day -lt $maxDay && $dayPresent -lt 20 && $totalHour -lt 120 ]]
+while [[ $day -le $maxDay && $dayPresent -lt 20 && $totalHour -lt 120 ]]
 do
 	workingHour="$( checkDayHour $((RANDOM%3)) )"
 	if [ $workingHour -ne 0 ]
@@ -32,11 +32,12 @@ do
 	totalHour=$(($totalHour+$workingHour))
 	dailyWage=$(($perHourSal*$workingHour))
 	totalWage=$(($totalWage+$dailyWage))
+	wage[ $(($day-1)) ]=$dailyWage
 	((day++))
 done
 echo "The total wage is $totalWage"
 echo "The total Hour worked $totalHour"
 echo "The total present days are $dayPresent"
-echo $day
-declare -A empWage
-empWage[totalWage]=$totalWage
+echo $(($day-1))
+echo ${wage[@]}
+echo ${#wage[@]}
